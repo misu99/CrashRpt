@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "tests\Tests_vs2010.vcxproj", "{C6941433-40EA-4307-A0A2-39BFB844367E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C610F50E-1013-46F0-AE20-4E918654B40F} = {C610F50E-1013-46F0-AE20-4E918654B40F}
@@ -70,6 +72,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "thirdparty\libogg\win32\VS2010\libogg_vs2010.vcxproj", "{15CBFEFF-7965-41F5-B4E2-21E8795C9159}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libtheora", "thirdparty\libtheora\win32\VS2010\libtheora\libtheora_vs2010.vcxproj", "{653F3841-3F26-49B9-AFCF-091DB4B67031}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrashrptTest", "demos\CrashrptTest\CrashrptTest.vcxproj", "{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9BE99719-AA32-4463-A011-B61D55F020D6} = {9BE99719-AA32-4463-A011-B61D55F020D6}
+		{939312D6-690A-4103-92C5-4D89025BF10A} = {939312D6-690A-4103-92C5-4D89025BF10A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -261,8 +269,23 @@ Global
 		{653F3841-3F26-49B9-AFCF-091DB4B67031}.Release|Win32.Build.0 = Release|Win32
 		{653F3841-3F26-49B9-AFCF-091DB4B67031}.Release|x64.ActiveCfg = Release|x64
 		{653F3841-3F26-49B9-AFCF-091DB4B67031}.Release|x64.Build.0 = Release|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Debug|Win32.Build.0 = Debug|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Debug|x64.ActiveCfg = Debug|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Debug|x64.Build.0 = Debug|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release LIB|Win32.ActiveCfg = Release|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release LIB|Win32.Build.0 = Release|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release LIB|x64.ActiveCfg = Release|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release LIB|x64.Build.0 = Release|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release|Win32.ActiveCfg = Release|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release|Win32.Build.0 = Release|Win32
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release|x64.ActiveCfg = Release|x64
+		{DA4A3D3F-6E17-41C6-A690-0CF6E84B3EE1}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E599218F-0F72-4AE7-942B-AA2BF58D96E8}
 	EndGlobalSection
 EndGlobal
