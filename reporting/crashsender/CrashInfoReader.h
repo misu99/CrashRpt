@@ -252,6 +252,7 @@ public:
     int         m_nSmtpPort;            // SMTP port.
     CString     m_sSmtpProxyServer;     // SMTP proxy server.
     int         m_nSmtpProxyPort;       // SMTP proxy port.
+	WORD        m_wSmtpSecurity;        // SMTP encryption.
 	CString     m_sSmtpLogin;           // SMTP login.
 	CString     m_sSmtpPassword;        // SMTP password.
     CString     m_sUrl;                 // URL (used for HTTP connection).    

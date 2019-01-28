@@ -98,6 +98,7 @@ int CCrashHandler::Init(
         LPCTSTR lpcszCustomSenderIcon,
 		LPCTSTR lpcszSmtpLogin,
 		LPCTSTR lpcszSmtpPassword,
+		WORD wSmtpSecurity,
 		int nRestartTimeout)
 { 
 	// This method initializes configuration parameters, 
@@ -212,6 +213,9 @@ int CCrashHandler::Init(
         m_sEmailTo = sServer;
         m_nSmtpPort = _ttoi(sPort);
     }
+
+	// set up SMTP Encryption
+	m_wSmtpSecurity = wSmtpSecurity;
 
     // Set up SMTP proxy
     m_nSmtpProxyPort = 25;
@@ -556,6 +560,7 @@ CRASH_DESCRIPTION* CCrashHandler::PackCrashInfoIntoSharedMem(CSharedMem* pShared
 	m_pTmpCrashDesc->m_hWndVideoParent = m_hWndVideoParent;
 	m_pTmpCrashDesc->m_dwProcessId = GetCurrentProcessId();
 	m_pTmpCrashDesc->m_bClientAppCrashed = FALSE;
+	m_pTmpCrashDesc->m_wSmtpSecurity = m_wSmtpSecurity;
 	m_pTmpCrashDesc->m_nRestartTimeout = m_nRestartTimeout;
 
     m_pTmpCrashDesc->m_dwAppNameOffs = PackString(m_sAppName);
@@ -574,7 +579,7 @@ CRASH_DESCRIPTION* CCrashHandler::PackCrashInfoIntoSharedMem(CSharedMem* pShared
     m_pTmpCrashDesc->m_dwEmailTextOffs = PackString(m_sEmailText);  
     m_pTmpCrashDesc->m_dwSmtpProxyServerOffs = PackString(m_sSmtpProxyServer);    
 	m_pTmpCrashDesc->m_dwSmtpLoginOffs = PackString(m_sSmtpLogin);    
-	m_pTmpCrashDesc->m_dwSmtpPasswordOffs = PackString(m_sSmtpPassword);    
+	m_pTmpCrashDesc->m_dwSmtpPasswordOffs = PackString(m_sSmtpPassword);
 
 	// Pack file items
 	std::map<CString, FileItem>::iterator fit;

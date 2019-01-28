@@ -448,6 +448,11 @@ crSetCrashCallbackA(
 #define CR_SMTP 1  //!< Send error report via SMTP connection.
 #define CR_SMAPI 2 //!< Send error report via simple MAPI (using default mail client).
 
+// SMTP Encryption
+#define CR_SMTP_SECURITY_NO  0		// no
+#define CR_SMTP_SECURITY_TLS 1		// tls
+#define CR_SMTP_SECURITY_SSL 2		// ssl
+
 //! Special priority constant that allows to skip certain delivery method.
 #define CR_NEGATIVE_PRIORITY ((UINT)-1)
 
@@ -735,6 +740,7 @@ typedef struct tagCR_INSTALL_INFOW
     LPCWSTR pszCustomSenderIcon;    //!< Custom icon used for Error Report dialog.
 	LPCWSTR pszSmtpLogin;           //!< Login name used for SMTP authentication when sending error report as E-mail.
 	LPCWSTR pszSmtpPassword;        //!< Password used for SMTP authentication when sending error report as E-mail.	
+	WORD wSmtpSecurity;				//E-mail encryption
 	int nRestartTimeout;            //!< Timeout for application restart.
 }
 CR_INSTALL_INFOW;
@@ -769,6 +775,7 @@ typedef struct tagCR_INSTALL_INFOA
     LPCSTR pszCustomSenderIcon;    //!< Custom icon used for Error Report dialog.
 	LPCSTR pszSmtpLogin;           //!< Login name used for SMTP authentication when sending error report as E-mail.
 	LPCSTR pszSmtpPassword;        //!< Password used for SMTP authentication when sending error report as E-mail.	
+	WORD wSmtpSecurity;			   //E-mail encryption
 	int nRestartTimeout;           //!< Timeout for application restart.
 }
 CR_INSTALL_INFOA;

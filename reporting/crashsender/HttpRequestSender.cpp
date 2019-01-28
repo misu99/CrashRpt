@@ -319,7 +319,7 @@ BOOL CHttpRequestSender::InternalSend()
 	}
 
 	// Add a message to log
-    m_Assync->SetProgress(_T("Error report has been sent OK!"), 100, false);
+    m_Assync->SetProgress(_T("report has been sent OK!"), 100, false);
     bStatus = TRUE;
 
 cleanup:

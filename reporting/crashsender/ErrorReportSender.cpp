@@ -11,7 +11,6 @@ be found in the Authors.txt file in the root of the source tree.
 #include "stdafx.h"
 #include "ErrorReportSender.h"
 #include "MailMsg.h"
-#include "smtpclient.h"
 #include "HttpRequestSender.h"
 #include "CrashRpt.h"
 #include "md5.h"
@@ -2269,28 +2268,49 @@ BOOL CErrorReportSender::SendOverSMTP()
     }
 
 	// Fill in email fields
+	m_SmtpClient.SetSecurityType(SMTP_SECURITY_TYPE(m_CrashInfo.m_wSmtpSecurity));
+	m_SmtpClient.SetXPriority(XPRIORITY_NORMAL);
+	//m_SmtpClient.SetCharSet("UTF-8");
+
     // If the sender is not defined, use the first e-mail address from the recipient list.
 	if (m_CrashInfo.GetReport(m_nCurReport)->GetEmailFrom().IsEmpty()) 
 	{
 		// Force a copy of the string. Simple assignment just references the data of g_CrashInfo.m_sEmailTo. 
 		// The copy string will be modified by strtok.
-		CString copy((LPCTSTR)m_CrashInfo.m_sEmailTo, m_CrashInfo.m_sEmailTo.GetLength());
-		TCHAR   separators[] = _T(";, ");
-		TCHAR  *context		 = 0;
-		TCHAR  *to			 = _tcstok_s(const_cast<LPTSTR>((LPCTSTR)copy), separators, &context);
-		m_EmailMsg.SetSenderAddress((to == 0 || *to == 0) ? m_CrashInfo.m_sEmailTo : to);
+		//CString copy((LPCTSTR)m_CrashInfo.m_sEmailTo, m_CrashInfo.m_sEmailTo.GetLength());
+		//TCHAR   separators[] = _T(";, ");
+		//TCHAR  *context		 = 0;
+		//TCHAR  *to			 = _tcstok_s(const_cast<LPTSTR>((LPCTSTR)copy), separators, &context);
+		//m_SmtpClient.SetSenderMail(strconv.t2a((to == 0 || *to == 0) ? m_CrashInfo.m_sEmailTo : to));
+
+		// 发件人地址需要与smtp服务器保持一致,以下代码替代原来的逻辑
+		if (m_CrashInfo.m_sSmtpLogin.Find(_T('@')) > 0)
+		{
+			m_SmtpClient.SetSenderMail(strconv.t2a(m_CrashInfo.m_sSmtpLogin));
+		}
+		else
+		{
+			int nPos = m_CrashInfo.m_sSmtpProxyServer.Find(_T('.'));
+			if (nPos > -1)
+			{
+				CString strDomain = m_CrashInfo.m_sSmtpProxyServer.Mid(nPos + 1);
+				CString strEmailSender = m_CrashInfo.m_sSmtpLogin + _T("@") + strDomain;
+				m_SmtpClient.SetSenderMail(strconv.t2a(strEmailSender));
+			}
+		}
 	} 
 	else
-		m_EmailMsg.SetSenderAddress(m_CrashInfo.GetReport(m_nCurReport)->GetEmailFrom());
-	m_EmailMsg.AddRecipients(m_CrashInfo.m_sEmailTo);    
-	m_EmailMsg.SetSubject(m_CrashInfo.m_sEmailSubject);
+		m_SmtpClient.SetSenderMail(strconv.t2a(m_CrashInfo.GetReport(m_nCurReport)->GetEmailFrom()));
+	m_SmtpClient.SetSenderName("CrashSender");
+	m_SmtpClient.AddRecipient(strconv.t2a(m_CrashInfo.m_sEmailTo));
+	m_SmtpClient.SetSubject(strconv.t2a(m_CrashInfo.m_sEmailSubject));
 
     if(m_CrashInfo.m_sEmailText.IsEmpty())
-        m_EmailMsg.SetText(FormatEmailText());
+		m_SmtpClient.AddMsgLine(strconv.t2a(FormatEmailText()));
     else
-        m_EmailMsg.SetText(m_CrashInfo.m_sEmailText);
+		m_SmtpClient.AddMsgLine(strconv.t2a(m_CrashInfo.m_sEmailText));
 
-	m_EmailMsg.AddAttachment(m_sZipName);  
+	m_SmtpClient.AddAttachment(strconv.t2a(m_sZipName));
 
     // Create and attach MD5 hash file
     CString sErrorRptHash;
@@ -2311,19 +2331,39 @@ BOOL CErrorReportSender::SendOverSMTP()
         LPCSTR szErrorRptHash = strconv.t2a(sErrorRptHash.GetBuffer(0));
         fwrite(szErrorRptHash, strlen(szErrorRptHash), 1, f);
         fclose(f);
-        m_EmailMsg.AddAttachment(sTmpFileName);  
+		m_SmtpClient.AddAttachment(strconv.t2a(sTmpFileName));
     }
 
     // Set SMTP proxy server (if specified)
-    if ( !m_CrashInfo.m_sSmtpProxyServer.IsEmpty())
-        m_SmtpClient.SetSmtpServer( m_CrashInfo.m_sSmtpProxyServer, m_CrashInfo.m_nSmtpProxyPort);
-
+	if (!m_CrashInfo.m_sSmtpProxyServer.IsEmpty())
+		m_SmtpClient.SetSMTPServer(strconv.t2a(m_CrashInfo.m_sSmtpProxyServer), (unsigned short)m_CrashInfo.m_nSmtpProxyPort);
+		
 	// Set SMTP login and password
-	m_SmtpClient.SetAuthParams(m_CrashInfo.m_sSmtpLogin, m_CrashInfo.m_sSmtpPassword);
+	m_SmtpClient.SetLogin(strconv.t2a(m_CrashInfo.m_sSmtpLogin));
+	m_SmtpClient.SetPassword(strconv.t2a(m_CrashInfo.m_sSmtpPassword));
 
     // Send mail assynchronously
-    int res = m_SmtpClient.SendEmailAssync(&m_EmailMsg, &m_Assync); 
-    return (res==0);
+	try
+	{
+		m_SmtpClient.Send();
+		LONGLONG lNum = m_SmtpClient.dwNumChar;
+		if (lNum > 0)
+		{
+			m_Assync.SetProgress(100);
+			m_Assync.SetCompleted(0);
+			return TRUE;
+		}
+	}
+	catch (ECSmtp e)
+	{
+		CString strError= CString(e.GetErrorText().c_str());
+		m_Assync.SetProgress(strError, 100, false);
+	}
+	catch (...)
+	{
+		m_Assync.SetProgress(_T("sendmail 未知错误"), 100, false);
+	}
+    return FALSE;
 }
 
 // This method sends the report over Simple MAPI

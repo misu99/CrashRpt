@@ -100,9 +100,10 @@ LRESULT CErrorReportDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /
     // Init font for consent string.
     LOGFONT lf;
     memset(&lf, 0, sizeof(LOGFONT));
-    lf.lfHeight = 11;
-    lf.lfWeight = FW_NORMAL;
+    lf.lfHeight = 13;
+    lf.lfWeight = FW_THIN;
     lf.lfQuality = ANTIALIASED_QUALITY;
+    lf.lfItalic = TRUE;
     _TCSCPY_S(lf.lfFaceName, 32, _T("Tahoma"));
     CFontHandle hConsentFont;
     hConsentFont.CreateFontIndirect(&lf);

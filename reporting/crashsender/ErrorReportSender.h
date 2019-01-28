@@ -11,7 +11,7 @@ be found in the Authors.txt file in the root of the source tree.
 #pragma once
 #include "AssyncNotification.h"
 #include "MailMsg.h"
-#include "smtpclient.h"
+#include "CSmtp.h"
 #include "HttpRequestSender.h"
 #include "tinyxml.h"
 #include "CrashInfoReader.h"
@@ -217,8 +217,7 @@ private:
     HANDLE m_hThread;                   // Handle to the worker thread.
     int m_SendAttempt;                  // Number of current sending attempt.
     AssyncNotification m_Assync;        // Used for communication with the main thread.
-    CEmailMessage m_EmailMsg;           // Email message to send.
-    CSmtpClient m_SmtpClient;           // Used to send report over SMTP.
+	CSmtp m_SmtpClient;           // Used to send report over SMTP.
     CHttpRequestSender m_HttpSender;    // Used to send report over HTTP.
     CMailMsg m_MapiSender;              // Used to send report over SMAPI.
     CString m_sZipName;                 // Name of the ZIP archive to send.

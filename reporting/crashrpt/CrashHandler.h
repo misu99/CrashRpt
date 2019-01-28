@@ -108,6 +108,7 @@ public:
         __in_opt LPCTSTR lpcszCustomSenderIcon = NULL,
 		__in_opt LPCTSTR lpcszSmtpLogin = NULL,
 		__in_opt LPCTSTR lpcszSmtpPassword = NULL,
+		WORD wSmtpSecurity = 0,
 		__in_opt int nRestartTimeout = 0);
 
 	// Returns TRUE if object was initialized.
@@ -277,6 +278,7 @@ public:
 	int m_nRestartTimeout;         // Restart timeout.
     CString m_sUrl;                // Url to use when sending error report over HTTP.  
     CString m_sEmailTo;            // E-mail recipient.
+	WORD m_wSmtpSecurity;          // SMTP encryption.
     int m_nSmtpPort;               // SMTP port.
     CString m_sSmtpProxyServer;    // SMTP proxy.
     int m_nSmtpProxyPort;          // SMTP proxy port.
