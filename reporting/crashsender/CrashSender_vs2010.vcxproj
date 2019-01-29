@@ -176,7 +176,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>libtheorad.lib;liboggd.lib;tinyxmld.lib;jpegd.lib;zlibd.lib;minizipd.lib;WS2_32.lib;Dnsapi.lib;wininet.lib;Rpcrt4.lib;Gdi32.lib;shell32.lib;Comdlg32.lib;version.lib;libpngd.lib;psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\lib;$(SolutionDir)thirdparty\openssl\x86\vc10\staticlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\lib;$(SolutionDir)thirdparty\openssl\staticlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)\CrashSenderd.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -219,7 +219,7 @@
     </ResourceCompile>
     <Link>
       <AdditionalDependencies>libtheora.lib;libogg.lib;jpeg.lib;tinyxml.lib;zlib.lib;libpng.lib;minizip.lib;WS2_32.lib;Dnsapi.lib;wininet.lib;Rpcrt4.lib;psapi.lib;Gdi32.lib;shell32.lib;Comdlg32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\lib;$(SolutionDir)thirdparty\openssl\x86\vc10\staticlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\lib;$(SolutionDir)thirdparty\openssl\staticlib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)\CrashSender.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
