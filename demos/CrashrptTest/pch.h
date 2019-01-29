@@ -10,6 +10,6 @@
 #define PCH_H
 
 // TODO: 添加要在此处预编译的标头
-#include "CrashHelper.h"
+#include <helper/CrashHelper.h>
 
 #endif //PCH_H
