@@ -4,8 +4,8 @@
  * @brief Declares the crash handler class.
  */
 #pragma once
-#ifndef __CRASHHANDLER_H__
-#define __CRASHHANDLER_H__
+#ifndef __CRASHHELPER_H__
+#define __CRASHHELPER_H__
 
 #include <string>
 #include <CrashRpt.h>
@@ -59,4 +59,4 @@ class CrashHelper {
     };
     static GarbageCleanup garbage;
 };
-#endif // !__CRASHHANDLER_H__
+#endif // !__CRASHHELPER_H__
