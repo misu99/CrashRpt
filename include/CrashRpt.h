@@ -729,6 +729,7 @@ typedef struct tagCR_INSTALL_INFOW
     LPGETLOGFILE pfnCrashCallback;  //!< Deprecated, do not use.
     UINT uPriorities[5];            //!< Array of error sending transport priorities.
     DWORD dwFlags;                  //!< Flags.
+	WORD wSmtpSecurity;				//E-mail encryption
     LPCWSTR pszPrivacyPolicyURL;    //!< URL of privacy policy agreement.
     LPCWSTR pszDebugHelpDLL;        //!< File name or folder of Debug help DLL.
     MINIDUMP_TYPE uMiniDumpType;    //!< Minidump type.
@@ -740,7 +741,6 @@ typedef struct tagCR_INSTALL_INFOW
     LPCWSTR pszCustomSenderIcon;    //!< Custom icon used for Error Report dialog.
 	LPCWSTR pszSmtpLogin;           //!< Login name used for SMTP authentication when sending error report as E-mail.
 	LPCWSTR pszSmtpPassword;        //!< Password used for SMTP authentication when sending error report as E-mail.	
-	WORD wSmtpSecurity;				//E-mail encryption
 	int nRestartTimeout;            //!< Timeout for application restart.
 }
 CR_INSTALL_INFOW;
@@ -764,6 +764,7 @@ typedef struct tagCR_INSTALL_INFOA
     LPGETLOGFILE pfnCrashCallback; //!< Deprecated, do not use.
     UINT uPriorities[5];           //!< Array of error sending transport priorities.
     DWORD dwFlags;                 //!< Flags.
+	WORD wSmtpSecurity;			   //E-mail encryption
     LPCSTR pszPrivacyPolicyURL;    //!< URL of privacy policy agreement.
     LPCSTR pszDebugHelpDLL;        //!< File name or folder of Debug help DLL.
     MINIDUMP_TYPE uMiniDumpType;   //!< Mini dump type.
@@ -775,7 +776,6 @@ typedef struct tagCR_INSTALL_INFOA
     LPCSTR pszCustomSenderIcon;    //!< Custom icon used for Error Report dialog.
 	LPCSTR pszSmtpLogin;           //!< Login name used for SMTP authentication when sending error report as E-mail.
 	LPCSTR pszSmtpPassword;        //!< Password used for SMTP authentication when sending error report as E-mail.	
-	WORD wSmtpSecurity;			   //E-mail encryption
 	int nRestartTimeout;           //!< Timeout for application restart.
 }
 CR_INSTALL_INFOA;

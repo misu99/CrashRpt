@@ -165,6 +165,9 @@ CSmtp::CSmtp()
 	m_iXPriority = XPRIORITY_NORMAL;
 	m_iSMTPSrvPort = 0;
 	m_bAuthenticate = true;
+	FileBuf = NULL;
+	FileName = NULL;
+	hFile = NULL;
 
 	// Initialize WinSock
 	WSADATA wsaData;
@@ -710,8 +713,6 @@ void CSmtp::Send()
 
 				if(dwSize >= BUFFER_SIZE/2)
 				{
-					int dwIndex = 0;
-
 					while(Offset<(dwSize - 1))
 					{
 						strncpy_s(SendBuf, BUFFER_SIZE, ResultLine + Offset, BUFFER_SIZE / 2);
@@ -772,8 +773,6 @@ void CSmtp::Send()
 
 					if(dwSize >= BUFFER_SIZE / 2)
 					{
-						int dwIndex = 0;
-
 						while(Offset < (dwSize - 1))
 						{
 							strncpy_s(SendBuf, BUFFER_SIZE, ResultLine + Offset, BUFFER_SIZE / 2);
@@ -2050,10 +2049,9 @@ void CSmtp::SendData(Command_Entry* pEntry)
 	if(SendBuf == NULL)
 		throw ECSmtp(ECSmtp::SENDBUF_IS_EMPTY);
 
+	FD_ZERO(&fdwrite);
 	while(nLeft > 0)
 	{
-		FD_ZERO(&fdwrite);
-
 		FD_SET(hSocket, &fdwrite);
 
 		if((res = select(0, NULL, &fdwrite, NULL, &time)) == SOCKET_ERROR)

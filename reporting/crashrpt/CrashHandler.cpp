@@ -87,6 +87,7 @@ int CCrashHandler::Init(
         LPCTSTR lpcszUrl,
         UINT (*puPriorities)[5],
         DWORD dwFlags,
+	    WORD wSmtpSecurity,
         LPCTSTR lpcszPrivacyPolicyURL,
         LPCTSTR lpcszDebugHelpDLLPath,
         MINIDUMP_TYPE MiniDumpType,
@@ -98,7 +99,6 @@ int CCrashHandler::Init(
         LPCTSTR lpcszCustomSenderIcon,
 		LPCTSTR lpcszSmtpLogin,
 		LPCTSTR lpcszSmtpPassword,
-		WORD wSmtpSecurity,
 		int nRestartTimeout)
 { 
 	// This method initializes configuration parameters, 
@@ -109,6 +109,9 @@ int CCrashHandler::Init(
 
 	// Save flags
     m_dwFlags = dwFlags;
+
+	// set up SMTP Encryption
+	m_wSmtpSecurity = wSmtpSecurity;
 
     // Save minidump type  
     m_MinidumpType = MiniDumpType;
@@ -213,9 +216,6 @@ int CCrashHandler::Init(
         m_sEmailTo = sServer;
         m_nSmtpPort = _ttoi(sPort);
     }
-
-	// set up SMTP Encryption
-	m_wSmtpSecurity = wSmtpSecurity;
 
     // Set up SMTP proxy
     m_nSmtpProxyPort = 25;
@@ -549,6 +549,7 @@ CRASH_DESCRIPTION* CCrashHandler::PackCrashInfoIntoSharedMem(CSharedMem* pShared
     m_pTmpCrashDesc->m_dwTotalSize = sizeof(CRASH_DESCRIPTION);  
     m_pTmpCrashDesc->m_dwCrashRptVer = CRASHRPT_VER;
     m_pTmpCrashDesc->m_dwInstallFlags = m_dwFlags;
+	m_pTmpCrashDesc->m_wSmtpSecurity = m_wSmtpSecurity;
     m_pTmpCrashDesc->m_MinidumpType = m_MinidumpType;
     m_pTmpCrashDesc->m_nSmtpPort = m_nSmtpPort;
     m_pTmpCrashDesc->m_nSmtpProxyPort = m_nSmtpProxyPort;
@@ -560,7 +561,6 @@ CRASH_DESCRIPTION* CCrashHandler::PackCrashInfoIntoSharedMem(CSharedMem* pShared
 	m_pTmpCrashDesc->m_hWndVideoParent = m_hWndVideoParent;
 	m_pTmpCrashDesc->m_dwProcessId = GetCurrentProcessId();
 	m_pTmpCrashDesc->m_bClientAppCrashed = FALSE;
-	m_pTmpCrashDesc->m_wSmtpSecurity = m_wSmtpSecurity;
 	m_pTmpCrashDesc->m_nRestartTimeout = m_nRestartTimeout;
 
     m_pTmpCrashDesc->m_dwAppNameOffs = PackString(m_sAppName);

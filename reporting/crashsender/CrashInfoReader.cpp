@@ -551,7 +551,6 @@ int CCrashInfoReader::UnpackCrashDescription(CErrorReportInfo& eri)
     m_nSmtpPort = m_pCrashDesc->m_nSmtpPort;
     UnpackString(m_pCrashDesc->m_dwSmtpProxyServerOffs, m_sSmtpProxyServer);
     m_nSmtpProxyPort = m_pCrashDesc->m_nSmtpProxyPort;
-	m_wSmtpSecurity = m_pCrashDesc->m_wSmtpSecurity;
     UnpackString(m_pCrashDesc->m_dwEmailSubjectOffs, m_sEmailSubject);
     UnpackString(m_pCrashDesc->m_dwEmailTextOffs, m_sEmailText);  
     memcpy(m_uPriorities, m_pCrashDesc->m_uPriorities, sizeof(UINT)*3);
@@ -572,6 +571,7 @@ int CCrashInfoReader::UnpackCrashDescription(CErrorReportInfo& eri)
     m_DesiredFrameSize = m_pCrashDesc->m_DesiredFrameSize;
 	m_hWndVideoParent = m_pCrashDesc->m_hWndVideoParent;
 	m_bClientAppCrashed = m_pCrashDesc->m_bClientAppCrashed;
+	m_wSmtpSecurity = m_pCrashDesc->m_wSmtpSecurity;
 
     DWORD dwOffs = m_pCrashDesc->m_wSize;
     while(dwOffs<m_pCrashDesc->m_dwTotalSize)

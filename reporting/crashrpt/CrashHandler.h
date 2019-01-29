@@ -97,6 +97,7 @@ public:
         __in_opt LPCTSTR lpcszUrl = NULL,
         __in_opt UINT (*puPriorities)[5] = NULL,
         DWORD dwFlags = 0,
+		WORD wSmtpSecurity = 0,
         __in_opt LPCTSTR lpcszPrivacyPolicyURL = NULL,
         __in_opt LPCTSTR lpcszDebugHelpDLLPath = NULL,
         MINIDUMP_TYPE MiniDumpType = MiniDumpNormal,
@@ -108,7 +109,6 @@ public:
         __in_opt LPCTSTR lpcszCustomSenderIcon = NULL,
 		__in_opt LPCTSTR lpcszSmtpLogin = NULL,
 		__in_opt LPCTSTR lpcszSmtpPassword = NULL,
-		WORD wSmtpSecurity = 0,
 		__in_opt int nRestartTimeout = 0);
 
 	// Returns TRUE if object was initialized.

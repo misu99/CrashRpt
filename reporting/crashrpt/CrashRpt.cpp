@@ -92,6 +92,7 @@ CRASHRPTAPI(int) crInstallW(CR_INSTALL_INFOW* pInfo)
         ptszUrl,
         &pInfo->uPriorities,
         pInfo->dwFlags,
+		pInfo->wSmtpSecurity,
         ptszPrivacyPolicyURL,
         ptszDebugHelpDLL_file,
         miniDumpType,
@@ -103,7 +104,6 @@ CRASHRPTAPI(int) crInstallW(CR_INSTALL_INFOW* pInfo)
         ptszCustomSenderIcon,
 		ptszSmtpLogin,
 		ptszSmtpPassword,
-		pInfo->wSmtpSecurity,
 		pInfo->nRestartTimeout
         );
 
@@ -197,6 +197,7 @@ CRASHRPTAPI(int) crInstallA(CR_INSTALL_INFOA* pInfo)
         ptszUrl,
         &pInfo->uPriorities,
         pInfo->dwFlags,
+		pInfo->wSmtpSecurity,
         ptszPrivacyPolicyURL,
         ptszDebugHelpDLL_file,
         miniDumpType,
@@ -208,7 +209,6 @@ CRASHRPTAPI(int) crInstallA(CR_INSTALL_INFOA* pInfo)
         ptszCustomSenderIcon,
 		ptszSmtpLogin,
 		ptszSmtpPassword,
-		pInfo->wSmtpSecurity,
 		pInfo->nRestartTimeout
         );
 
