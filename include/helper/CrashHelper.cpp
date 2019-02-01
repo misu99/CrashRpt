@@ -2,11 +2,11 @@
 #include <tchar.h>
 
 #ifdef _CRASHRPTTEST
-#	ifdef _DEBUG
-#	pragma comment(lib,"CrashRpt1403d.lib")
-#	else
-#	pragma comment(lib,"CrashRpt1403.lib")
-#	endif
+#   ifdef _DEBUG
+#   pragma comment(lib,"CrashRpt1403d.lib")
+#   else
+#   pragma comment(lib,"CrashRpt1403.lib")
+#   endif
 #else
 # pragma comment(lib,"CrashRpt1403.lib")
 #endif
@@ -53,15 +53,11 @@ void CrashHelper::AddFile(const LPCTSTR &strFilePath) {
 
     if (INVALID_HANDLE_VALUE == FindFirstFile(strFilePath, &FindFileData)) {
         strPathTemp = m_pInstance->m_strAppPath + strFilePath;
-
-        if (INVALID_HANDLE_VALUE == FindFirstFile(strPathTemp.c_str(), &FindFileData)) {
-            return;
-        }
     }
 
     auto nPosA = strPathTemp.rfind('\\');
     auto nPosB = strPathTemp.rfind('/');
-    auto nPos = (std::wstring::npos == nPosA ? nPosB : (std::wstring::npos == nPosB ? std::wstring::npos : (nPosA > nPosB ? nPosA : nPosB)));
+    auto nPos = (std::wstring::npos == nPosA ? nPosB : (std::wstring::npos == nPosB ? nPosA : (nPosA > nPosB ? nPosA : nPosB)));
     auto strName = strPathTemp.substr(nPos + 1);
     crAddFile2(strPathTemp.c_str(), strName.c_str(), _T("Additional files"), CR_AF_MAKE_FILE_COPY | CR_AF_MISSING_FILE_OK);
 }
@@ -173,7 +169,7 @@ bool CrashHelper::GetConfParams(const LPCTSTR &confName, TConfParams &tconf) {
     //WIN32_FIND_DATA FindFileData;
 
     //if (INVALID_HANDLE_VALUE == FindFirstFile(confName, &FindFileData)) {
-        m_strConfPath = m_strAppPath + confName;
+    m_strConfPath = m_strAppPath + confName;
     //    if (INVALID_HANDLE_VALUE == FindFirstFile(m_strConfPath.c_str(), &FindFileData)) {
     //        return false;
     //    }
